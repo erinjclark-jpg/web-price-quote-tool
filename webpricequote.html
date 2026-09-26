@@ -1,7 +1,7 @@
 <!--
 ========================================
 7. PROJECT CONTEXT & MANIFEST: Rocklin Solar Repair Quote Tool.
-   Current Version: v3.5
+   Current Version: v3.4
 
    STRICT RULES & INSTRUCTIONS:
    1. NO TRUNCATION: Do not abbreviate or remove existing code under any circumstances unless explicitly requested.
@@ -49,7 +49,7 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 <div class="flex items-center gap-3">
 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
 <div>
-<h1 class="text-3xl font-bold tracking-tight flex items-center flex-wrap gap-2">Rocklin Solar Repair Quote Calculator <span class="text-base font-medium bg-sky-800 text-sky-100 px-2.5 py-0.5 rounded shadow-inner tracking-normal">v3.5</span></h1>
+<h1 class="text-3xl font-bold tracking-tight flex items-center flex-wrap gap-2">Rocklin Solar Repair Quote Calculator <span class="text-base font-medium bg-sky-800 text-sky-100 px-2.5 py-0.5 rounded shadow-inner tracking-normal">v3.4</span></h1>
 <p class="text-sky-200 text-sm font-medium mt-1">CSLB License #1050566</p>
 </div>
 </div>
@@ -468,7 +468,10 @@ document.getElementById('mobile-footer').style.display='none';
 const drawerHandle = document.querySelector('.cursor-pointer.bg-white.rounded-t-3xl');
 if(drawerHandle) drawerHandle.style.display='none';}
 
-function openPrintWindow(){window.print();}
+function openPrintWindow(){
+const quoteHtml=document.getElementById('quote-panel').innerHTML;const newWin=window.open('','_blank');
+newWin.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Solar Repair Quote</title><script src="https://cdn.tailwindcss.com"><\/script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif;background-color:white;color:#1e293b;padding:2rem;}#action-buttons,.print\\:hidden,label,input[type="checkbox"]{display:none !important;}.print-header{display:block !important;margin-bottom:2rem;text-align:center;}#total-price-print{display:block !important;}[contenteditable]{-webkit-user-modify:read-only;}.overflow-y-auto,.custom-scrollbar,#quote-panel{overflow:visible !important;max-height:none !important;box-shadow:none !important;border:none !important;}</style></head><body><div class="max-w-2xl mx-auto">${quoteHtml}</div><script>setTimeout(()=>{window.print();},800);<\/script></body></html>`);
+newWin.document.close();}
 window.addEventListener('DOMContentLoaded',initializeApp);
 </script>
 </body>
