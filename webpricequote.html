@@ -1,0 +1,478 @@
+<!--
+========================================
+7. PROJECT CONTEXT & MANIFEST: Rocklin Solar Repair Quote Tool.
+   Current Version: v3.4
+
+   STRICT RULES & INSTRUCTIONS:
+   1. NO TRUNCATION: Do not abbreviate or remove existing code under any circumstances unless explicitly requested.
+   2. NO CODE REDUCTION: Keep all existing functionality and structure intact.
+   3. NO STYLE CHANGES: Do not modify CSS, Tailwind classes, or the visual appearance without explicit permission.
+   4. VERSION CONTROL: Increment the version number in this manifest AND in the header badge (e.g., v2.5 to v2.6) every time ANY change is made to this file.
+
+   Main Categories that MUST exist:
+   - Diagnostics & Service Visits
+   - New solar panel & Installation (best match)
+   - Sunpower/Solarbridge Replacement with Enphase
+   - Tesla Inverter Installation
+   - Solaredge Inverter Installation
+   - Fronius Inverter Installation
+   - Enphase Communication Device
+   - Solar Panel Removal & Reinstallation
+   - Solar Panel Cleaning
+   - Critter Guard Installation
+   - Enphase Microinverter Installation
+   - Solaredge Optimizer Installation
+   - Tigo Optimizer Installation
+   - Finalize Solar System commissioning
+   - Array Map Creation
+   - Misc Work
+========================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Interactive Solar Repair Quote Tool</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
+
+<style>
+body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::-webkit-scrollbar{width:6px;height:6px}.custom-scrollbar::-webkit-scrollbar-track{background:#f1f5f9;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb:hover{background:#94a3b8}@media print{body{background-color:#fff}#selection-panel,#action-buttons,#header-description,#mobile-footer,label[for="hide-prices-toggle"],#hide-prices-toggle{display:none !important}#quote-wrapper{width:100% !important;position:static !important;transform:none !important}#quote-panel{width:100% !important;max-width:none !important;box-shadow:none !important;border:none !important}.print-header{display:block !important}}.print-header{display:none}.no-spinners::-webkit-inner-spin-button,.no-spinners::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.no-spinners{-moz-appearance:textfield}
+</style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen pb-24 lg:pb-12">
+
+<header class="bg-sky-700 text-white shadow-md print:hidden">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="flex items-center gap-3">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+<div>
+<h1 class="text-3xl font-bold tracking-tight flex items-center flex-wrap gap-2">Rocklin Solar Repair Quote Calculator <span class="text-base font-medium bg-sky-800 text-sky-100 px-2.5 py-0.5 rounded shadow-inner tracking-normal">v3.4</span></h1>
+<p class="text-sky-200 text-sm font-medium mt-1">CSLB License #1050566</p>
+</div>
+</div>
+<p id="header-description" class="mt-2 text-sky-100 max-w-2xl">Select the repair services you need below to generate an instant, estimated quote. For items with variable quantities, enter the amount to update the total.</p>
+</div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 relative">
+<div class="flex flex-col lg:flex-row gap-8">
+<div id="selection-panel" class="w-full lg:w-2/3 space-y-6">
+<section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+<h3 class="text-lg font-semibold text-slate-800 mb-4">Project Details</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div><label class="block text-sm font-medium text-slate-700">Customer Name</label><input type="text" id="customer-name" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="John Doe"></div>
+<div><label class="block text-sm font-medium text-slate-700">Inspector Name</label><input type="text" id="inspector-name" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="Jane Smith"></div>
+<div class="sm:col-span-2"><label class="block text-sm font-medium text-slate-700">Customer Address</label><input type="text" id="customer-address" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="123 Solar Way, Sunnyville, CA 90210"></div>
+<div class="sm:col-span-2"><label class="block text-sm font-medium text-slate-700">Solar Inspection Report Link</label><input type="url" id="report-link" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="Paste Spectora link here..."></div>
+</div>
+</section>
+
+<div id="service-search-container" class="sticky top-0 z-30 bg-[#f8fafc] pt-2 pb-2">
+<div class="relative mb-3">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+<input type="text" id="service-search" onkeyup="filterServices()" class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-500 focus:outline-none focus:placeholder-slate-400 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 sm:text-sm transition-shadow shadow-sm" placeholder="Search for repairs, parts, or services...">
+</div>
+<div class="flex overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 custom-scrollbar gap-2" id="category-pills"></div>
+</div>
+
+<div id="services-container" class="space-y-6"></div>
+
+<section id="custom-work-section" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+<div id="custom-work-header" class="bg-slate-50 px-6 py-4 border-b border-slate-200 cursor-pointer flex justify-between items-center hover:bg-slate-100 transition-colors">
+<h3 class="text-lg font-semibold text-slate-800">Custom Work & Parts</h3>
+<svg id="custom-work-chevron" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+</div>
+<div id="custom-work-content" class="p-6 hidden">
+<div class="flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row gap-4 items-end">
+<div class="flex-1 w-full"><label class="block text-sm font-medium text-slate-700">Item Name</label><input type="text" id="custom-name" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="E.g., Replace broken roof tile"></div>
+<div class="w-full sm:w-32"><label class="block text-sm font-medium text-slate-700">Price ($)</label><input type="number" id="custom-price" min="0" step="0.01" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="0.00"></div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 items-end">
+<div class="flex-1 w-full"><label class="block text-sm font-medium text-slate-700">Description of Work</label><input type="text" id="custom-desc" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-2 border" placeholder="E.g., Removal of shattered tile, supply and install matching replacement, and weather seal."></div>
+<button type="button" id="add-custom-btn" class="w-full sm:w-32 bg-sky-600 hover:bg-sky-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 h-[42px]">Add</button>
+</div>
+</div>
+<p id="custom-error" class="text-red-500 text-sm mt-2 hidden">Please provide an item name, description, and a valid price.</p>
+<div id="custom-items-list" class="mt-6 space-y-3 empty:hidden"></div>
+</div>
+</section>
+</div>
+
+<!-- Mobile Overlay -->
+<div id="quote-mobile-overlay" class="fixed inset-0 bg-slate-900/60 z-40 hidden lg:hidden opacity-0 transition-opacity duration-300" onclick="toggleMobileQuote()"></div>
+
+<!-- Drawer / Sidebar Wrapper -->
+<div id="quote-wrapper" class="w-full lg:w-1/3 fixed lg:static bottom-0 left-0 right-0 z-50 lg:z-auto bg-slate-100 lg:bg-transparent rounded-t-3xl lg:rounded-none transform translate-y-full lg:translate-y-0 transition-transform duration-300 max-h-[90vh] lg:max-h-none flex flex-col shadow-[0_-15px_40px_rgba(0,0,0,0.2)] lg:shadow-none pb-0">
+<div class="w-full flex justify-center pt-4 pb-2 lg:hidden cursor-pointer bg-white rounded-t-3xl border-b border-slate-200" onclick="toggleMobileQuote()">
+<div class="w-12 h-1.5 bg-slate-300 rounded-full"></div>
+</div>
+
+<div id="quote-panel" class="bg-white lg:rounded-2xl shadow-xl lg:border border-slate-200 lg:sticky lg:top-8 flex flex-col h-full lg:max-h-[calc(100vh-4rem)] overflow-hidden">
+<div class="print-header mb-8 text-center border-b border-slate-200 pb-6 print:pb-4 print:mb-6 mt-4 lg:mt-0">
+<h2 class="text-3xl font-bold text-slate-800">Rocklin Solar Repair</h2>
+<p class="text-slate-600 text-sm mt-1">6518 Lonetree Blvd #2050, Rocklin, CA 95765<br>Phone: 916-741-0194 &bull; CSLB License #1050566</p>
+<h3 class="text-xl font-semibold text-sky-800 mt-4">Estimated Repair Quote</h3>
+<p class="text-slate-500 text-sm mt-1">Generated on: <span id="print-date"></span></p>
+</div>
+<div class="p-6 border-b border-slate-100 bg-slate-50 lg:rounded-t-2xl print:rounded-none">
+<h2 class="text-xl font-semibold text-slate-800 flex items-center gap-2 print:hidden">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>Your Estimate</h2>
+<div id="quote-project-details" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm text-slate-600 hidden print:mt-0 print:border-none print:p-0 print:bg-transparent">
+<div class="grid grid-cols-1 gap-2">
+<p class="flex justify-between"><span class="font-medium text-slate-700">Customer:</span> <span id="display-customer" class="text-right"></span></p>
+<p class="flex justify-between"><span class="font-medium text-slate-700">Address:</span> <span id="display-address" class="text-right max-w-[200px]"></span></p>
+<p class="flex justify-between"><span class="font-medium text-slate-700">Inspector:</span> <span id="display-inspector" class="text-right"></span></p>
+<div id="display-report-container" class="mt-2 pt-2 border-t border-slate-100 hidden flex justify-center print:hidden"><a id="display-report-link" href="#" target="_blank" class="text-sky-600 hover:text-sky-800 font-medium flex items-center justify-center gap-1.5 bg-sky-50 hover:bg-sky-100 py-1.5 px-3 rounded-md transition-colors w-full text-center border border-sky-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg> View Inspection Report & Photos</a></div>
+</div>
+</div>
+</div>
+<div class="p-6 flex-1 overflow-y-auto custom-scrollbar bg-white">
+<div id="empty-state" class="text-center py-8 text-slate-400 print:hidden">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+<p>No services selected yet.</p>
+<p class="text-sm mt-1">Choose items from the list to build your quote.</p>
+</div>
+<ul id="quote-items" class="space-y-6 hidden"></ul>
+</div>
+<div class="p-6 bg-slate-50 lg:rounded-b-2xl border-t border-slate-200 print:bg-white print:border-t-2 print:border-slate-800 pb-10 lg:pb-6">
+<div class="mb-4 pb-4 border-b border-slate-200 print:hidden">
+<label class="flex items-center space-x-2 text-sm font-medium text-slate-700 cursor-pointer">
+<input type="checkbox" id="hide-prices-toggle" class="w-5 h-5 rounded border-slate-300 text-sky-600 focus:ring-sky-500">
+<span>Hide itemized prices on quote (Customer View)</span>
+</label>
+<p class="text-xs text-slate-500 mt-1 ml-7">Check this box before printing/saving to only show the grand total.</p>
+</div>
+<div class="mb-4 pb-4 border-b border-slate-200 print:hidden flex flex-col sm:flex-row gap-4 items-end justify-between">
+<div class="flex-1 w-full"><label for="discount-desc" class="text-sm font-medium text-slate-700">Discount Description (Optional)</label><input type="text" id="discount-desc" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-1.5 border" placeholder="E.g., Fall Special"></div>
+<div><label for="discount-input" class="text-sm font-medium text-slate-700">Amount ($)</label><input type="number" id="discount-input" min="0" step="0.01" class="mt-1 block w-full sm:w-24 rounded-md border-slate-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm p-1.5 border sm:text-right" placeholder="0.00"></div>
+</div>
+<div id="subtotal-row" class="flex justify-between items-center text-slate-600 mb-2"><span>Subtotal</span> <span id="subtotal" class="font-medium">$0.00</span></div>
+<div id="discount-row" class="flex justify-between items-center text-green-600 mb-2 hidden"><span id="discount-label">Discount</span> <span id="discount-display" class="font-medium">-$0.00</span></div>
+<div class="flex justify-between items-center pt-4 border-t border-slate-200 relative print:border-none print:pt-2">
+<div class="flex flex-col"><span class="text-lg font-bold text-slate-800">Total</span><button id="reset-total-btn" class="text-xs text-sky-600 hover:text-sky-800 text-left hidden print:hidden mt-1 font-medium transition-colors cursor-pointer" onclick="resetTotal()">Reset calculation</button></div>
+<div class="flex items-center">
+<div id="total-input-container" class="text-3xl font-bold text-sky-700 print:hidden flex items-center">$ <input type="number" id="total-price-input" class="w-32 bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-sky-500 focus:outline-none text-right transition-colors p-0 m-0 ml-1 no-spinners" step="0.01" min="0"></div>
+<span id="total-price-print" class="text-3xl font-bold text-sky-700 hidden print:block">$0.00</span>
+</div>
+</div>
+<div id="action-buttons" class="flex flex-col sm:flex-row gap-3 mt-6 print:hidden">
+<button id="share-btn" onclick="generateShareLink()" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+Copy Share Link
+</button>
+<button id="print-btn" onclick="openPrintWindow()" class="flex-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+Save PDF
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="mobile-footer" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1)] flex lg:hidden justify-between items-center z-30 print:hidden transition-transform duration-300">
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 font-bold uppercase tracking-wider">Estimated Total</span>
+<span id="mobile-total-display" class="text-xl font-bold text-sky-700">$0.00</span>
+</div>
+<button onclick="toggleMobileQuote()" class="bg-sky-600 hover:bg-sky-700 text-white px-5 py-3 rounded-xl font-medium shadow-sm flex items-center gap-2 transition-colors">
+View Quote
+<span id="mobile-item-count" class="bg-sky-500 text-white text-xs py-0.5 px-2 rounded-full font-bold min-w-[20px] text-center">0</span>
+</button>
+</div>
+</main>
+
+<script>
+const repairData=[
+{category:"Diagnostics & Service Visits",items:[{id:"visit_insp",name:"Inspection",description:"Comprehensive visual and technical inspection of the solar array and related electrical components to assess current condition.",price:299,isVariable:!1},{id:"visit_diag",name:"Diagnose/Repair Visit",description:"On-site troubleshooting, system testing, and diagnostic evaluation to identify faults and perform minor immediate repairs.",price:349,isVariable:!1}]},
+{category:"New solar panel & Installation (best match)",items:[{id:"new_1_5_single",name:"Single Story (1-5 panels)",description:"Supply and installation of matching replacement solar panels on a single-story roof, including standard mounting hardware integration.",price:750,isVariable:!0,unit:"panels"},{id:"new_1_5_two",name:"Two Story (1-5 panels)",description:"Supply and installation of matching replacement solar panels on a two-story roof, including required safety setups and standard hardware.",price:825,isVariable:!0,unit:"panels"},{id:"new_gt5_single",name:"Single Story (more than 5 panels)",description:"Supply and installation of matching replacement solar panels (bulk quantity) on a single-story roof.",price:700,isVariable:!0,unit:"panels"},{id:"new_gt5_two",name:"Two Story (more than 5 panels)",description:"Supply and installation of matching replacement solar panels (bulk quantity) on a two-story roof.",price:775,isVariable:!0,unit:"panels"}]},
+{category:"Sunpower/Solarbridge Replacement with Enphase",items:[{id:"sb_enph_gw",name:"Enphase Gateway",description:"Installation of a new Enphase Gateway for system communication, monitoring, and overall system management.",price:1399,isVariable:!1},{id:"sb_enph_mic",name:"Microinverter Installation (per panel)",description:"Removal of outdated components and integration of new Enphase microinverters on existing roof panels.",price:450,isVariable:!0,unit:"panels"},{id:"sb_enph_2nd",name:"Two Story Adder (per panel)",description:"Additional labor and safety requirements for microinverter installation on a two-story roof.",price:25,isVariable:!0,unit:"panels"}]},
+{category:"Tesla Inverter Installation",items:[{id:"tes_3_w",name:"Size 3 (Warranty Price)",description:"Installation and commissioning of a Size 3 Tesla inverter covered under manufacturer replacement warranty. Includes removal and proper disposal of the old equipment.",price:875,isVariable:!1},{id:"tes_3_n",name:"Size 3 (No Warranty)",description:"Supply, installation, and commissioning of a new Size 3 Tesla inverter (out of warranty replacement). Includes removal and proper disposal of the old equipment.",price:3500,isVariable:!1},{id:"tes_4_w",name:"Size 4 (Warranty Price)",description:"Installation and commissioning of a Size 4 Tesla inverter covered under manufacturer replacement warranty. Includes removal and proper disposal of the old equipment.",price:875,isVariable:!1},{id:"tes_4_n",name:"Size 4 (No Warranty)",description:"Supply, installation, and commissioning of a new Size 4 Tesla inverter (out of warranty replacement). Includes removal and proper disposal of the old equipment.",price:3550,isVariable:!1},{id:"tes_5_w",name:"Size 5 (Warranty Price)",description:"Installation and commissioning of a Size 5 Tesla inverter covered under manufacturer replacement warranty. Includes removal and proper disposal of the old equipment.",price:875,isVariable:!1},{id:"tes_5_n",name:"Size 5 (No Warranty)",description:"Supply, installation, and commissioning of a new Size 5 Tesla inverter (out of warranty replacement). Includes removal and proper disposal of the old equipment.",price:3600,isVariable:!1},{id:"tes_6_w",name:"Size 6 (Warranty Price)",description:"Installation and commissioning of a Size 6 Tesla inverter covered under manufacturer replacement warranty. Includes removal and proper disposal of the old equipment.",price:875,isVariable:!1},{id:"tes_6_n",name:"Size 6 (No Warranty)",description:"Supply, installation, and commissioning of a new Size 6 Tesla inverter (out of warranty replacement). Includes removal and proper disposal of the old equipment.",price:3650,isVariable:!1},{id:"tes_7_w",name:"Size 7 (Warranty Price)",description:"Installation and commissioning of a Size 7 Tesla inverter covered under manufacturer replacement warranty. Includes removal and proper disposal of the old equipment.",price:875,isVariable:!1},{id:"tes_7_n",name:"Size 7 (No Warranty)",description:"Supply, installation, and commissioning of a new Size 7 Tesla inverter (out of warranty replacement). Includes removal and proper disposal of the old equipment.",price:3700,isVariable:!1}]},
+{category:"Solaredge Inverter Installation",items:[{id:"se_3.8_w",name:"Size 3.8 (Warranty Price)",description:"Installation of a Size 3.8 SolarEdge inverter provided under manufacturer warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"se_3.8_n",name:"Size 3.8 (No Warranty)",description:"Supply and installation of a new Size 3.8 SolarEdge inverter. Includes removal and proper disposal of the old equipment.",price:2750,isVariable:!1},{id:"se_5_w",name:"Size 5 (Warranty Price)",description:"Installation of a Size 5 SolarEdge inverter provided under manufacturer warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"se_5_n",name:"Size 5 (No Warranty)",description:"Supply and installation of a new Size 5 SolarEdge inverter. Includes removal and proper disposal of the old equipment.",price:2800,isVariable:!1},{id:"se_6_w",name:"Size 6 (Warranty Price)",description:"Installation of a Size 6 SolarEdge inverter provided under manufacturer warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"se_6_n",name:"Size 6 (No Warranty)",description:"Supply and installation of a new Size 6 SolarEdge inverter. Includes removal and proper disposal of the old equipment.",price:2900,isVariable:!1},{id:"se_7.6_w",name:"Size 7.6 (Warranty Price)",description:"Installation of a Size 7.6 SolarEdge inverter provided under manufacturer warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"se_7.6_n",name:"Size 7.6 (No Warranty)",description:"Supply and installation of a new Size 7.6 SolarEdge inverter. Includes removal and proper disposal of the old equipment.",price:2975,isVariable:!1}]},
+{category:"Fronius Inverter Installation",items:[{id:"fro_3.8_w",name:"Size 3.8 (Warranty Price)",description:"Installation and programming of a Size 3.8 Fronius inverter covered under warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"fro_3.8_n",name:"Size 3.8 (No Warranty)",description:"Supply and installation of a new Size 3.8 Fronius inverter. Includes removal and proper disposal of the old equipment.",price:2875,isVariable:!1},{id:"fro_5_w",name:"Size 5 (Warranty Price)",description:"Installation and programming of a Size 5 Fronius inverter covered under warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"fro_5_n",name:"Size 5 (No Warranty)",description:"Supply and installation of a new Size 5 Fronius inverter. Includes removal and proper disposal of the old equipment.",price:2975,isVariable:!1},{id:"fro_6_w",name:"Size 6 (Warranty Price)",description:"Installation and programming of a Size 6 Fronius inverter covered under warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"fro_6_n",name:"Size 6 (No Warranty)",description:"Supply and installation of a new Size 6 Fronius inverter. Includes removal and proper disposal of the old equipment.",price:3100,isVariable:!1},{id:"fro_7.7_w",name:"Size 7.7 (Warranty Price)",description:"Installation and programming of a Size 7.7 Fronius inverter covered under warranty. Includes removal and proper disposal of the old equipment.",price:790,isVariable:!1},{id:"fro_7.7_n",name:"Size 7.7 (No Warranty)",description:"Supply and installation of a new Size 7.7 Fronius inverter. Includes removal and proper disposal of the old equipment.",price:3300,isVariable:!1}]},
+{category:"Enphase Communication Device",items:[{id:"en_com_box",name:"Install New Enphase Combiner Box",description:"Mounting and electrical integration of a complete Enphase IQ Combiner box with integrated Envoy.",price:1699,isVariable:!1},{id:"en_envoy_enc",name:"Install New Envoy and enclosure",description:"Installation of a new Enphase Envoy communication gateway along with a protective weatherproof enclosure.",price:1599,isVariable:!1},{id:"en_envoy_no",name:"Install New Envoy no enclosure needed",description:"Direct installation of an Enphase Envoy communication gateway into an existing protective setup.",price:1299,isVariable:!1}]},
+{category:"Solar Panel Removal & Reinstallation",items:[{id:"rem_min",name:"Removal: Minimum Charge (up to 5 panels)",description:"Careful detachment and safe on-site storage of up to 5 existing solar panels to allow for roof repairs or staging.",price:650,isVariable:!1},{id:"rem_add",name:"Removal: Additional Per Panel",description:"Detachment and safe storage of extra solar panels beyond the minimum 5-panel limit.",price:125,isVariable:!0,unit:"panels"},{id:"rem_2nd",name:"Removal: 2nd Story adder",description:"Additional labor and safety requirements for panel removal performed on a two-story roof.",price:50,isVariable:!1},{id:"rei_min",name:"Reinstall: Minimum Charge (up to 5 panels)",description:"Reinstallation, secure mounting, and electrical reconnection of up to 5 previously removed solar panels.",price:650,isVariable:!1},{id:"rei_add",name:"Reinstall: Additional Per Panel",description:"Reinstallation and reconnection of extra solar panels beyond the minimum 5-panel limit.",price:125,isVariable:!0,unit:"panels"},{id:"rei_2nd",name:"Reinstall: 2nd Story adder",description:"Additional labor and safety requirements for panel reinstallation performed on a two-story roof.",price:50,isVariable:!1}]},
+{category:"Solar Panel Cleaning",items:[{id:"cln_setup",name:"Set Up Cost",description:"Base deployment charge including transportation of cleaning equipment, safety gear, and specialized water filtration systems.",price:199,isVariable:!1},{id:"cln_per_panel",name:"Per Panel",description:"Professional surface cleaning of solar modules to remove dirt, debris, and soiling to restore optimal energy output.",price:10,isVariable:!0,unit:"panels"},{id:"cln_2nd",name:"2nd Story adder",description:"Additional safety rigging and ladder handling required for cleaning operations on a two-story roof.",price:50,isVariable:!1},{id:"cln_paint",name:"Paint Removal",description:"Professional removal of paint overspray or splatter from solar panel surfaces.",price:20,isVariable:!0,unit:"panels"}]},
+{category:"Critter Guard Installation",items:[{id:"crit_setup",name:"Set Up Cost",description:"Base deployment charge including custom mesh cutting tools, specialized fasteners, and safety equipment setup.",price:199,isVariable:!1},{id:"crit_per_panel",name:"Per Panel",description:"Installation of durable protective mesh barrier around the solar array perimeter to prevent animal intrusion, nesting, and wire damage.",price:35,isVariable:!0,unit:"panels"},{id:"crit_2nd",name:"2nd Story adder",description:"Additional safety and access requirements for critter guard installation on a two-story structure.",price:50,isVariable:!1},{id:"crit_rem_rei",name:"Panel Removal & Reinstallation",description:"Remove and reinstall panel so nests and debris can be cleaned out and wires checked and repaired.",price:100,isVariable:!0,unit:"panels"}]},
+{category:"Enphase Microinverter Installation",items:[{id:"en_mic_1st_w",name:"First (Warranty Price)",description:"Installation of the primary Enphase microinverter covered under warranty replacement, including pairing and testing.",price:349,isVariable:!1},{id:"en_mic_add_w",name:"each additional (Warranty Price)",description:"Installation of subsequent warranty-covered Enphase microinverters during the same service visit.",price:175,isVariable:!0,unit:"micros"},{id:"en_mic_1st_n",name:"First (No Warranty)",description:"Supply and installation of a new Enphase microinverter (out of warranty replacement).",price:599,isVariable:!1},{id:"en_mic_add_n",name:"each additional (No Warranty)",description:"Supply and installation of subsequent non-warranty Enphase microinverters during the same service visit.",price:425,isVariable:!0,unit:"micros"}]},
+{category:"Solaredge Optimizer Installation",items:[{id:"se_opt_1st_w",name:"First (Warranty Price)",description:"Installation of the primary SolarEdge DC optimizer covered under warranty replacement, including pairing.",price:349,isVariable:!1},{id:"se_opt_add_w",name:"each additional (Warranty Price)",description:"Installation of subsequent warranty-covered SolarEdge optimizers during the same service visit.",price:175,isVariable:!0,unit:"opts"},{id:"se_opt_1st_n",name:"First (No Warranty)",description:"Supply and installation of a new SolarEdge DC optimizer (out of warranty replacement).",price:599,isVariable:!1},{id:"se_opt_add_n",name:"each additional (No Warranty)",description:"Supply and installation of subsequent non-warranty SolarEdge optimizers during the same service visit.",price:425,isVariable:!0,unit:"opts"}]},
+{category:"Tigo Optimizer Installation",items:[{id:"tigo_gw",name:"Tigo Communication Gateway",description:"Installation of a new Tigo Communication gateway, connection to the customers wi-fi and customer account set up",price:975,isVariable:!1},{id:"tigo_opt",name:"Tigo Optimizer Installation",description:"installation of new Tigo Power Optimizers per solar panel",price:225,isVariable:!0,unit:"optimizers"},{id:"tigo_map",name:"Array Map Builder",description:"Creation of the panel by panel array map and link to the customers account",price:150,isVariable:!1}]},
+{category:"Finalize Solar System commissioning",items:[{id:"acc_setup",name:"Finalize Solar System commissioning",description:"Complete account creation and or set up. Provide account access to the homeowner and login instructions.",price:599,isVariable:!1}]},
+{category:"Array Map Creation",items:[{id:"array_map_creation",name:"Serial Number Documentation",description:"Locate and document the microinverter or optimizer serial numbers so an array map can be created",price:40,isVariable:!0,unit:"panels"},{id:"array_map_builder",name:"Array Map Builder",description:"Place the solar panels on the array map to match the actual location on the roof. Publish the map to the customers account",price:199,isVariable:!1}]},
+{category:"Misc Work",items:[{id:"visit_misc_trip",name:"Misc Work Trip Charge",description:"Base trip charge to cover vehicle roll, initial travel time, standard tool deployment, and safety equipment setup.",price:199,isVariable:!1},{id:"plc_garage",name:"Power Line Communication (Inverter in Garage)",description:"Setup and configuration of network power line communication adapters for a garage-mounted inverter.",price:399,isVariable:!1},{id:"plc_outside",name:"Power Line Communication (Inverter Outside)",description:"Setup and configuration of network power line communication adapters for an externally-mounted inverter.",price:499,isVariable:!1},{id:"misc_wires",name:"Cover Exposed Wires",description:"Installation of protective conduit or UV-rated wire management to safely cover and secure exposed array wiring.",price:49,isVariable:!0,unit:"10 ft"},{id:"misc_anchors",name:"New Wall Anchors",description:"Installation of robust masonry or siding anchors to properly secure electrical conduit or equipment enclosures.",price:20,isVariable:!0,unit:"anchors"},{id:"misc_clamps",name:"Install New Solar Panel Clamps",description:"Replacement of degraded or damaged panel mid/end clamps to ensure structural integrity of the array.",price:25,isVariable:!0,unit:"clamps"},{id:"misc_locks",name:"Lock on Disconnect",description:"Installation of safety padlocks on AC/DC disconnect switches for safety code compliance.",price:20,isVariable:!0,unit:"locks"},{id:"misc_cond",name:"Add Conduit Tee and Drain",description:"Modification of existing electrical conduit to add a T-junction and weep hole to prevent water accumulation.",price:325,isVariable:!0,unit:"units"}]}];
+
+let selectedServices={};let isTotalOverridden=!1;let isReadOnly=!1;
+
+function resetTotal(){if(isReadOnly)return;isTotalOverridden=!1;document.getElementById('reset-total-btn').classList.add('hidden');updateQuoteUI();}
+
+function initializeApp(){
+const urlParams=new URLSearchParams(window.location.search);
+const legacyData=urlParams.get('quote');
+const v2Data=urlParams.get('d');
+
+renderCategoryPills();
+
+if(v2Data || legacyData){
+try{
+let quoteData;
+if(v2Data) {
+quoteData=JSON.parse(LZString.decompressFromEncodedURIComponent(v2Data));
+const reconstructed = {};
+for(let id in quoteData.s) {
+let ms = quoteData.s[id];
+if(ms.c) {
+reconstructed[id] = {name:ms.n, description:ms.d, price:ms.p, quantity:ms.q, isVariable:false, editedTitle:ms.et, editedDescription:ms.ed, editedPrice:ms.ep};
+} else {
+let foundItem = null; let foundCat = null;
+for(let cat of repairData) {
+let match = cat.items.find(i => i.id === id);
+if(match) { foundItem = match; foundCat = cat.category; break; }
+}
+if(foundItem) {
+reconstructed[id] = {
+name: foundItem.name, description: foundItem.description, category: foundCat, price: foundItem.price, quantity: ms.q, isVariable: foundItem.isVariable, unit: foundItem.unit, editedTitle: ms.et, editedDescription: ms.ed, editedPrice: ms.ep
+};
+}
+}
+}
+quoteData.s = reconstructed;
+} else {
+quoteData=JSON.parse(decodeURIComponent(atob(legacyData)));
+}
+
+isReadOnly=!0;
+document.getElementById('customer-name').value=quoteData.c||'';document.getElementById('customer-address').value=quoteData.a||'';document.getElementById('inspector-name').value=quoteData.i||'';document.getElementById('report-link').value=quoteData.r||'';document.getElementById('discount-input').value=quoteData.d||'';document.getElementById('discount-desc').value=quoteData.dd||'';document.getElementById('hide-prices-toggle').checked=quoteData.h||!1;selectedServices=quoteData.s||{};isTotalOverridden=quoteData.o||!1;
+if(isTotalOverridden){document.getElementById('total-price-input').value=quoteData.t;document.getElementById('total-price-print').textContent=`$${parseFloat(quoteData.t).toFixed(2)}`;}
+document.getElementById('print-date').textContent=new Date().toLocaleDateString();setupProjectDetails();enterReadOnlyMode();updateQuoteUI();return;
+}catch(e){console.error("Invalid quote link",e);isReadOnly=!1;}
+}
+
+const container=document.getElementById('services-container');
+document.getElementById('print-date').textContent=new Date().toLocaleDateString();
+document.getElementById('hide-prices-toggle').addEventListener('change',updateQuoteUI);
+document.getElementById('discount-input').addEventListener('input',updateQuoteUI);
+document.getElementById('discount-desc').addEventListener('input',updateQuoteUI);
+document.getElementById('total-price-input').addEventListener('input',(e)=>{isTotalOverridden=!0;document.getElementById('reset-total-btn').classList.remove('hidden');let val=parseFloat(e.target.value);if(isNaN(val))val=0;document.getElementById('total-price-print').textContent=`$${val.toFixed(2)}`;});
+
+repairData.forEach((categoryObj, index)=>{
+const section=document.createElement('section');
+section.className='bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden category-section';
+section.id=`cat-section-${index}`;
+section.setAttribute('data-category', categoryObj.category);
+
+const header=document.createElement('div');header.className='bg-slate-50 px-6 py-4 border-b border-slate-200 cursor-pointer flex justify-between items-center hover:bg-slate-100 transition-colors';
+header.innerHTML=`<h3 class="text-lg font-semibold text-slate-800">${categoryObj.category}</h3><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 transform transition-transform duration-200 category-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>`;
+section.appendChild(header);
+const itemsList=document.createElement('div');itemsList.className='divide-y divide-slate-100 hidden items-list';
+header.addEventListener('click',()=>{if(itemsList.classList.contains('hidden')){itemsList.classList.remove('hidden');header.querySelector('svg').classList.add('rotate-180');}else{itemsList.classList.add('hidden');header.querySelector('svg').classList.remove('rotate-180');}});
+
+categoryObj.items.forEach(item=>{
+const itemDiv=document.createElement('div');
+itemDiv.className='p-4 sm:p-6 hover:bg-slate-50 transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4 service-item';
+itemDiv.setAttribute('data-name', item.name);
+itemDiv.setAttribute('data-desc', item.description);
+
+const labelDiv=document.createElement('label');labelDiv.className='flex items-start cursor-pointer group flex-1 w-full';
+labelDiv.innerHTML=`<div class="flex items-center h-6 mt-0.5"><input type="checkbox" id="cb_${item.id}" data-id="${item.id}" class="w-6 h-6 sm:w-5 sm:h-5 text-sky-600 bg-slate-100 border-slate-300 rounded focus:ring-sky-500 focus:ring-2 transition-all cursor-pointer"></div><div class="ml-4 sm:ml-3 flex-1"><span class="block text-base font-medium text-slate-700 group-hover:text-sky-700 transition-colors">${item.name}</span><span class="block text-xs text-slate-400 mt-0.5 leading-snug">${item.description}</span><span class="block text-sm text-slate-500 mt-1.5 font-medium">$${item.price.toFixed(2)} ${item.isVariable?`<span class="italic font-normal">per ${item.unit}</span>`:''}</span></div>`;
+itemDiv.appendChild(labelDiv);
+const controlsDiv=document.createElement('div');controlsDiv.className='flex items-center justify-end sm:w-48 mt-2 sm:mt-0 pl-10 sm:pl-0';
+if(item.isVariable){controlsDiv.innerHTML=`<div class="flex items-center opacity-40 transition-opacity duration-300" id="qty_container_${item.id}"><label for="qty_${item.id}" class="sr-only">Quantity</label><input type="number" id="qty_${item.id}" min="1" value="1" disabled class="w-20 h-10 text-center border-slate-300 rounded-lg shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm disabled:bg-slate-100 disabled:cursor-not-allowed"><span class="ml-2 text-sm text-slate-500 w-12 truncate">${item.unit}</span></div>`;}else{controlsDiv.innerHTML=`<span class="text-lg font-semibold text-slate-700">$${item.price.toFixed(2)}</span>`;}
+itemDiv.appendChild(controlsDiv);itemsList.appendChild(itemDiv);
+setTimeout(()=>{
+const checkbox=document.getElementById(`cb_${item.id}`);const qtyInput=item.isVariable?document.getElementById(`qty_${item.id}`):null;const qtyContainer=item.isVariable?document.getElementById(`qty_container_${item.id}`):null;
+checkbox.addEventListener('change',(e)=>{if(e.target.checked){if(item.isVariable){qtyInput.disabled=!1;qtyContainer.classList.remove('opacity-40');qtyInput.focus();}addToQuote(item,item.isVariable?parseInt(qtyInput.value):1,categoryObj.category);}else{if(item.isVariable){qtyInput.disabled=!0;qtyContainer.classList.add('opacity-40');}removeFromQuote(item.id);}});
+if(item.isVariable){qtyInput.addEventListener('input',(e)=>{let val=parseInt(e.target.value);if(isNaN(val)||val<1)val=1;if(checkbox.checked){addToQuote(item,val,categoryObj.category);}});}
+},0);});
+section.appendChild(itemsList);container.appendChild(section);});
+setupProjectDetails();setupCustomItems();updateQuoteUI();}
+
+function filterServices() {
+  const query = document.getElementById('service-search').value.toLowerCase();
+  const sections = document.querySelectorAll('.category-section');
+  
+  sections.forEach(section => {
+    const catName = section.getAttribute('data-category').toLowerCase();
+    const items = section.querySelectorAll('.service-item');
+    let hasVisibleItem = false;
+    
+    items.forEach(item => {
+      const itemName = item.getAttribute('data-name').toLowerCase();
+      const itemDesc = item.getAttribute('data-desc').toLowerCase();
+      
+      if (itemName.includes(query) || itemDesc.includes(query) || catName.includes(query)) {
+        item.style.display = 'flex';
+        hasVisibleItem = true;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    
+    const itemsList = section.querySelector('.items-list');
+    const chevron = section.querySelector('.category-chevron');
+    
+    if (hasVisibleItem) {
+      section.style.display = 'block';
+      if (query.length > 0) {
+        itemsList.classList.remove('hidden');
+        chevron.classList.add('rotate-180');
+      }
+    } else {
+      section.style.display = 'none';
+    }
+  });
+}
+
+function renderCategoryPills() {
+  const pillsContainer = document.getElementById('category-pills');
+  repairData.forEach((categoryObj, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'whitespace-nowrap px-4 py-2 bg-slate-100 hover:bg-sky-50 text-slate-600 hover:text-sky-700 text-sm font-medium rounded-full border border-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm';
+    btn.textContent = categoryObj.category.split(' (')[0];
+    btn.onclick = () => {
+      const searchInput = document.getElementById('service-search');
+      if (searchInput.value) { searchInput.value = ''; filterServices(); }
+      
+      const section = document.getElementById(`cat-section-${index}`);
+      if(section) {
+        const headerOffset = 120;
+        const elementPosition = section.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        
+        const itemsList = section.querySelector('.items-list');
+        const chevron = section.querySelector('.category-chevron');
+        itemsList.classList.remove('hidden');
+        chevron.classList.add('rotate-180');
+      }
+    };
+    pillsContainer.appendChild(btn);
+  });
+}
+
+function toggleMobileQuote() {
+  const sidebar = document.getElementById('quote-wrapper');
+  const overlay = document.getElementById('quote-mobile-overlay');
+  const footer = document.getElementById('mobile-footer');
+  
+  if (sidebar.classList.contains('translate-y-full')) {
+    sidebar.classList.remove('translate-y-full');
+    overlay.classList.remove('hidden');
+    footer.classList.add('translate-y-full');
+    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+    document.body.style.overflow = 'hidden';
+  } else {
+    sidebar.classList.add('translate-y-full');
+    overlay.classList.add('opacity-0');
+    footer.classList.remove('translate-y-full');
+    setTimeout(() => overlay.classList.add('hidden'), 300);
+    document.body.style.overflow = '';
+  }
+}
+
+function setupProjectDetails(){
+const updateDisplay=()=>{
+const name=document.getElementById('customer-name').value.trim();const address=document.getElementById('customer-address').value.trim();const inspector=document.getElementById('inspector-name').value.trim();const reportLink=document.getElementById('report-link').value.trim();const displayDiv=document.getElementById('quote-project-details');
+if(name||address||inspector||reportLink){displayDiv.classList.remove('hidden');document.getElementById('display-customer').textContent=name||'-';document.getElementById('display-address').textContent=address||'-';document.getElementById('display-inspector').textContent=inspector||'-';const linkContainer=document.getElementById('display-report-container');const linkEl=document.getElementById('display-report-link');if(reportLink){linkContainer.classList.remove('hidden');linkEl.href=reportLink;}else{linkContainer.classList.add('hidden');linkEl.href='#';}}else{displayDiv.classList.add('hidden');}};
+['customer-name','customer-address','inspector-name','report-link'].forEach(id=>{document.getElementById(id).addEventListener('input',updateDisplay);});
+updateDisplay();}
+
+function setupCustomItems(){
+const customHeader=document.getElementById('custom-work-header');const customContent=document.getElementById('custom-work-content');const customChevron=document.getElementById('custom-work-chevron');
+customHeader.addEventListener('click',()=>{if(customContent.classList.contains('hidden')){customContent.classList.remove('hidden');customChevron.classList.add('rotate-180');}else{customContent.classList.add('hidden');customChevron.classList.remove('rotate-180');}});
+document.getElementById('add-custom-btn').addEventListener('click',()=>{
+const nameInput=document.getElementById('custom-name');const descInput=document.getElementById('custom-desc');const priceInput=document.getElementById('custom-price');const errorMsg=document.getElementById('custom-error');
+const name=nameInput.value.trim();const desc=descInput.value.trim();const price=parseFloat(priceInput.value);
+if(!name||!desc||isNaN(price)||price<0){errorMsg.classList.remove('hidden');return;}errorMsg.classList.add('hidden');
+const customId='custom_'+Date.now();const customItem={id:customId,name:name,description:desc,price:price,isVariable:!1};
+const list=document.getElementById('custom-items-list');const itemDiv=document.createElement('div');itemDiv.className='flex items-start justify-between p-4 bg-slate-50 rounded-xl border border-slate-200 shadow-sm';
+itemDiv.innerHTML=`<label class="flex items-start cursor-pointer flex-1 group"><div class="mt-0.5"><input type="checkbox" id="cb_${customId}" checked class="w-6 h-6 sm:w-5 sm:h-5 text-sky-600 bg-white border-slate-300 rounded focus:ring-sky-500 focus:ring-2 cursor-pointer transition-all"></div><div class="ml-4 sm:ml-3 flex-1 pr-4"><span class="block font-medium text-slate-700 group-hover:text-sky-700 transition-colors">${name}</span><span class="block text-xs text-slate-500 mt-1">${desc}</span></div></label><div class="flex items-center gap-4 mt-0.5"><span class="font-semibold text-slate-700">$${price.toFixed(2)}</span><button type="button" class="text-slate-400 hover:text-red-500 transition-colors p-2 sm:p-1" onclick="removeCustomItem('${customId}', this)" title="Delete Item"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button></div>`;
+list.appendChild(itemDiv);addToQuote(customItem,1);
+itemDiv.querySelector(`#cb_${customId}`).addEventListener('change',(e)=>{if(e.target.checked){addToQuote(customItem,1);}else{removeFromQuote(customId);}});
+nameInput.value='';descInput.value='';priceInput.value='';nameInput.focus();});}
+
+function removeCustomItem(id,btnElement){removeFromQuote(id);btnElement.closest('.p-4').remove();}
+function addToQuote(item,quantity,categoryName=null){selectedServices[item.id]={name:item.name,description:item.description,category:categoryName,price:item.price,quantity:quantity,isVariable:item.isVariable,unit:item.unit};updateQuoteUI();}
+function removeFromQuote(itemId){delete selectedServices[itemId];updateQuoteUI();}
+function updateItemTitle(id,newTitle){if(isReadOnly||!selectedServices[id])return;const defaultTitle=selectedServices[id].category?selectedServices[id].category:selectedServices[id].name;const safeTitle=newTitle.trim().replace(/</g,"&lt;").replace(/>/g,"&gt;");selectedServices[id].editedTitle=safeTitle!==''?safeTitle:defaultTitle;}
+function updateItemDescription(id,newDesc){if(isReadOnly||!selectedServices[id])return;const safeDesc=newDesc.trim().replace(/</g,"&lt;").replace(/>/g,"&gt;");selectedServices[id].editedDescription=safeDesc!==''?safeDesc:selectedServices[id].description;}
+function updateItemPrice(id,val){if(isReadOnly||!selectedServices[id])return;let parsed=parseFloat(val.replace(/[^0-9.-]+/g,""));if(!isNaN(parsed)&&parsed>=0){selectedServices[id].editedPrice=parsed;}else{delete selectedServices[id].editedPrice;}updateQuoteUI();}
+
+function updateQuoteUI(){
+const itemsContainer=document.getElementById('quote-items');const emptyState=document.getElementById('empty-state');const subtotalEl=document.getElementById('subtotal');const printBtn=document.getElementById('print-btn');const shareBtn=document.getElementById('share-btn');const hidePricesToggle=document.getElementById('hide-prices-toggle').checked;const subtotalRow=document.getElementById('subtotal-row');
+itemsContainer.innerHTML='';const serviceIds=Object.keys(selectedServices);let subtotal=0;let totalItemsCount = 0;
+if(serviceIds.length===0){
+emptyState.classList.remove('hidden');itemsContainer.classList.add('hidden');if(printBtn)printBtn.disabled=!0;if(shareBtn)shareBtn.disabled=!0;
+}else{
+emptyState.classList.add('hidden');itemsContainer.classList.remove('hidden');if(printBtn)printBtn.disabled=!1;if(shareBtn)shareBtn.disabled=!1;
+serviceIds.forEach(id=>{
+const s=selectedServices[id];const itemTotal=s.editedPrice!==undefined?s.editedPrice:s.price*s.quantity;subtotal+=itemTotal;
+totalItemsCount += s.isVariable ? parseInt(s.quantity) : 1;
+const li=document.createElement('li');li.className='flex justify-between items-start text-sm';
+const defaultTitle=s.category?s.category:s.name;const displayTitle=s.editedTitle!==undefined?s.editedTitle:defaultTitle;const displayDesc=s.editedDescription!==undefined?s.editedDescription:s.description;
+let nameHtml;
+const titleSpan=`<span class="font-medium text-slate-800 ${isReadOnly?'':'hover:bg-slate-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 rounded px-1 -ml-1 transition-colors cursor-text'}" ${isReadOnly?'':'contenteditable="true"'} onblur="updateItemTitle('${id}', this.innerText)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();this.blur();}">${displayTitle}</span>`;
+if(s.isVariable){if(hidePricesToggle){nameHtml=`${titleSpan} <span class="text-slate-500 font-normal ml-1">(${s.quantity} ${s.unit})</span>`;}else{nameHtml=`${titleSpan} <span class="text-slate-500 font-normal ml-1">(${s.quantity} ${s.unit} @ $${s.price})</span>`;}}else{nameHtml=titleSpan;}
+const descHtml=`<div class="text-slate-500 mt-1 ${isReadOnly?'':'hover:bg-slate-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 rounded px-1 -ml-1 transition-colors cursor-text'} leading-snug" ${isReadOnly?'':'contenteditable="true"'} onblur="updateItemDescription('${id}', this.innerText)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();this.blur();}">${displayDesc}</div>`;
+const priceHtml=hidePricesToggle?'':`<div class="font-semibold text-slate-800 whitespace-nowrap mt-0.5 ml-4 flex items-center">$<span ${isReadOnly?'':'contenteditable="true"'} class="${isReadOnly?'':'hover:bg-slate-100 focus:bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 rounded px-1 -mr-1 transition-colors cursor-text'}" onblur="updateItemPrice('${id}', this.innerText)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();this.blur();}">${itemTotal.toFixed(2)}</span></div>`;
+li.innerHTML=`<div class="pr-4 flex-1"><div>${nameHtml}</div>${descHtml}</div>${priceHtml}`;itemsContainer.appendChild(li);});}
+if(hidePricesToggle){subtotalRow.classList.add('hidden');}else{subtotalRow.classList.remove('hidden');}
+const discountInput=document.getElementById('discount-input');const discountDescInput=document.getElementById('discount-desc');let discount=parseFloat(discountInput.value)||0;if(discount>subtotal)discount=subtotal;let total=subtotal-discount;
+const discountRow=document.getElementById('discount-row');const discountDisplay=document.getElementById('discount-display');const discountLabel=document.getElementById('discount-label');
+if(hidePricesToggle){subtotalRow.classList.add('hidden');discountRow.classList.add('hidden');}else{subtotalRow.classList.remove('hidden');if(discount>0){discountRow.classList.remove('hidden');discountDisplay.textContent=`-$${discount.toFixed(2)}`;discountLabel.textContent=discountDescInput.value.trim()!==''?discountDescInput.value.trim():'Discount';}else{discountRow.classList.add('hidden');}}
+subtotalEl.textContent=`$${subtotal.toFixed(2)}`;
+if(!isTotalOverridden){
+  document.getElementById('total-price-input').value=total.toFixed(2);
+  document.getElementById('total-price-print').textContent=`$${total.toFixed(2)}`;
+}
+
+// Update Mobile Sticky Footer
+document.getElementById('mobile-total-display').textContent=`$${isTotalOverridden ? parseFloat(document.getElementById('total-price-input').value).toFixed(2) : total.toFixed(2)}`;
+document.getElementById('mobile-item-count').textContent=totalItemsCount;
+}
+
+function generateShareLink(){
+const ms = {};
+for(let id in selectedServices) {
+let s = selectedServices[id];
+if(id.startsWith('custom_')) {
+ms[id] = { c:1, n:s.name, d:s.description, p:s.price, q:s.quantity, et:s.editedTitle, ed:s.editedDescription, ep:s.editedPrice };
+} else {
+ms[id] = { q:s.quantity, et:s.editedTitle, ed:s.editedDescription, ep:s.editedPrice };
+}
+}
+const data={c:document.getElementById('customer-name').value,a:document.getElementById('customer-address').value,i:document.getElementById('inspector-name').value,r:document.getElementById('report-link').value,d:document.getElementById('discount-input').value,dd:document.getElementById('discount-desc').value,h:document.getElementById('hide-prices-toggle').checked,s:ms,o:isTotalOverridden,t:document.getElementById('total-price-input').value};
+const encoded=LZString.compressToEncodedURIComponent(JSON.stringify(data));
+const url=`${window.location.origin}${window.location.pathname}?d=${encoded}`;
+const textArea=document.createElement("textarea");textArea.value=url;textArea.style.position="fixed";document.body.appendChild(textArea);textArea.focus();textArea.select();
+try{document.execCommand('copy');const btn=document.getElementById('share-btn');const originalHtml=btn.innerHTML;btn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Link Copied!`;btn.classList.replace('bg-sky-600','bg-green-600');btn.classList.replace('hover:bg-sky-700','hover:bg-green-700');setTimeout(()=>{btn.innerHTML=originalHtml;btn.classList.replace('bg-green-600','bg-sky-600');btn.classList.replace('hover:bg-green-700','hover:bg-sky-700');},2500);}catch(err){console.error('Failed to copy',err);const btn=document.getElementById('share-btn');const originalHtml=btn.innerHTML;btn.innerHTML=`Error copying link`;btn.classList.replace('bg-sky-600','bg-red-600');setTimeout(()=>{btn.innerHTML=originalHtml;btn.classList.replace('bg-red-600','bg-sky-600');},2500);}document.body.removeChild(textArea);}
+
+function enterReadOnlyMode(){
+document.getElementById('selection-panel').style.display='none';
+const mainGrid=document.querySelector('.flex.flex-col.lg\\:flex-row');mainGrid.classList.remove('lg:flex-row');mainGrid.classList.add('justify-center');
+const quoteColumn=document.getElementById('quote-wrapper');
+quoteColumn.className='w-full max-w-3xl mx-auto static bg-transparent shadow-none';
+const quotePanel=document.getElementById('quote-panel');
+quotePanel.classList.remove('lg:sticky','lg:top-8','h-full','lg:max-h-[calc(100vh-4rem)]');
+document.getElementById('header-description').style.display='none';
+document.getElementById('hide-prices-toggle').closest('.mb-4').style.display='none';
+const discountRowInput=document.getElementById('discount-input').closest('.mb-4');if(discountRowInput)discountRowInput.style.display='none';
+document.getElementById('reset-total-btn').style.display='none';
+document.getElementById('total-input-container').style.display='none';
+const printTotal=document.getElementById('total-price-print');printTotal.classList.remove('hidden','print:block');printTotal.classList.add('block');
+document.getElementById('share-btn').style.display='none';
+document.getElementById('quote-mobile-overlay').style.display='none';
+document.getElementById('mobile-footer').style.display='none';
+const drawerHandle = document.querySelector('.cursor-pointer.bg-white.rounded-t-3xl');
+if(drawerHandle) drawerHandle.style.display='none';}
+
+function openPrintWindow(){
+const quoteHtml=document.getElementById('quote-panel').innerHTML;const newWin=window.open('','_blank');
+newWin.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Solar Repair Quote</title><script src="https://cdn.tailwindcss.com"><\/script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif;background-color:white;color:#1e293b;padding:2rem;}#action-buttons,.print\\:hidden,label,input[type="checkbox"]{display:none !important;}.print-header{display:block !important;margin-bottom:2rem;text-align:center;}#total-price-print{display:block !important;}[contenteditable]{-webkit-user-modify:read-only;}.overflow-y-auto,.custom-scrollbar,#quote-panel{overflow:visible !important;max-height:none !important;box-shadow:none !important;border:none !important;}</style></head><body><div class="max-w-2xl mx-auto">${quoteHtml}</div><script>setTimeout(()=>{window.print();},800);<\/script></body></html>`);
+newWin.document.close();}
+window.addEventListener('DOMContentLoaded',initializeApp);
+</script>
+</body>
+</html>
