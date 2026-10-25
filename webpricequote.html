@@ -1,7 +1,7 @@
 <!--
 ========================================
 7. PROJECT CONTEXT & MANIFEST: Rocklin Solar Repair Quote Tool.
-   Current Version: v3.17
+   Current Version: v3.20
 
    STRICT RULES & INSTRUCTIONS:
    1. NO TRUNCATION: Do not abbreviate or remove existing code under any circumstances unless explicitly requested.
@@ -42,7 +42,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.5.0/lz-string.min.js"></script>
 
 <style>
-body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::-webkit-scrollbar{width:6px;height:6px}.custom-scrollbar::-webkit-scrollbar-track{background:#f1f5f9;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb:hover{background:#94a3b8}@media print{body{background-color:#fff}#selection-panel,#action-buttons,#header-description,#mobile-footer,label[for="hide-prices-toggle"],#hide-prices-toggle{display:none !important}#quote-wrapper{width:100% !important;position:static !important;transform:none !important}#quote-panel{width:100% !important;max-width:none !important;box-shadow:none !important;border:none !important}.print-header{display:block !important}}.print-header{display:none}.no-spinners::-webkit-inner-spin-button,.no-spinners::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.no-spinners{-moz-appearance:textfield}
+body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::-webkit-scrollbar{width:6px;height:6px}.custom-scrollbar::-webkit-scrollbar-track{background:#f1f5f9;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}.custom-scrollbar::-webkit-scrollbar-thumb:hover{background:#94a3b8}@media print{body{background-color:#fff}#selection-panel,#action-buttons,#header-description,#mobile-footer,label[for="hide-prices-toggle"],#hide-prices-toggle{display:none !important}#quote-wrapper{width:100% !important;position:static !important;transform:none !important}#quote-panel{width:100% !important;max-width:none !important;box-shadow:none !important;border:none !important}.print-header{display:block !important}.print-only-section{display:block !important}}.print-header{display:none}.print-only-section{display:none}.no-spinners::-webkit-inner-spin-button,.no-spinners::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.no-spinners{-moz-appearance:textfield}
 </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen pb-24 lg:pb-12">
@@ -52,7 +52,7 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 <div class="flex items-center gap-3">
 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
 <div>
-<h1 class="text-3xl font-bold tracking-tight flex items-center flex-wrap gap-2">Rocklin Solar Repair Quote Calculator <span class="text-base font-medium bg-sky-800 text-sky-100 px-2.5 py-0.5 rounded shadow-inner tracking-normal">v3.17</span></h1>
+<h1 class="text-3xl font-bold tracking-tight flex items-center flex-wrap gap-2">Rocklin Solar Repair Quote Calculator <span class="text-base font-medium bg-sky-800 text-sky-100 px-2.5 py-0.5 rounded shadow-inner tracking-normal">v3.20</span></h1>
 <p class="text-sky-200 text-sm font-medium mt-1">CSLB License #1050566</p>
 </div>
 </div>
@@ -103,6 +103,65 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 <div id="custom-items-list" class="mt-6 space-y-3 empty:hidden"></div>
 </div>
 </section>
+
+<!-- PDF Options: Site Disclosures, Protections & Upsells -->
+<section id="pdf-options-section" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+<div id="pdf-options-header" class="bg-sky-50 px-6 py-4 border-b border-sky-100 cursor-pointer flex justify-between items-center hover:bg-sky-100/70 transition-colors">
+<div>
+<h3 class="text-lg font-semibold text-slate-800 flex items-center gap-2">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+PDF Quote Options: Site Conditions & Marketing Upsells
+</h3>
+<p class="text-xs text-slate-500 mt-0.5">Select the disclosures, site condition terms, and upsell banners to include on the saved PDF.</p>
+</div>
+<svg id="pdf-options-chevron" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 transform rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+</div>
+<div id="pdf-options-content" class="p-6 space-y-6">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 border-b border-slate-100 pb-1.5">A. Site Condition & Legal Protections</h4>
+<div class="space-y-3">
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-standard-terms" checked class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Include Standard Site Condition & Scope Disclaimers</strong> <span class="text-xs bg-sky-100 text-sky-800 px-2 py-0.5 rounded ml-1 font-medium">Default</span><br><span class="text-xs text-slate-500">Covers concealed under-array wire damage, cascading faults discovered after restoring power, Wi-Fi requirements, and 30-day quote validity.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-warranty-terms" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Include Manufacturer RMA / Warranty Contingency Notice</strong> <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded ml-1 font-medium">Auto-Checks on Warranty Items</span><br><span class="text-xs text-slate-500">Clarifies that "Warranty Price" items cover labor only and are contingent upon manufacturer RMA approval and hardware shipment.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-roof-warning" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Include Steep Roof / Two-Story / Brittle Tile Warning</strong><br><span class="text-xs text-slate-500">Adds specific protection regarding aged clay, lightweight concrete tiles, and two-story safety rigging requirements.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-tpo-notice" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Include TPO (Lease / PPA) Third-Party System Notice</strong><br><span class="text-xs text-slate-500">Notifies parties that third-party leased systems require lessor authorization prior to non-lessor modifications or equipment additions.</span></span>
+</label>
+</div>
+</div>
+
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 border-b border-slate-100 pb-1.5">B. Marketing & Upsell Opportunities</h4>
+<div class="space-y-3">
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-escrow-badge" checked class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Include "Real Estate & Escrow Transaction Friendly" Callout</strong> <span class="text-xs bg-sky-100 text-sky-800 px-2 py-0.5 rounded ml-1 font-medium">Default</span><br><span class="text-xs text-slate-500">Reassures realtors, buyers, and sellers that we coordinate directly with escrow and title companies to prevent closing delays.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-upsell-battery" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Pitch: Whole-Home Battery Backup Retrofit (Anker SOLIX E10 / Enphase 10C / Powerwall 3)</strong><br><span class="text-xs text-slate-500">Educates the homeowner/buyer that standard solar shuts off during grid outages and promotes our turnkey battery retrofits without main panel upgrades.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-upsell-critter" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Pitch: Critter Guard Bundle Discount (Save on Labor)</strong><br><span class="text-xs text-slate-500">Promotes adding heavy-duty perimeter mesh while our crew and ladders are already deployed on the roof.</span></span>
+</label>
+<label class="flex items-start cursor-pointer group">
+<input type="checkbox" id="opt-upsell-cleaning" class="mt-0.5 w-5 h-5 text-sky-600 border-slate-300 rounded focus:ring-sky-500 cursor-pointer" onchange="updatePdfExtras()">
+<span class="ml-3 text-sm text-slate-700"><strong class="font-semibold text-slate-800">Pitch: Deionized Solar Panel Cleaning Bundle Discount</strong><br><span class="text-xs text-slate-500">Promotes adding a professional panel cleaning to boost production up to 15% while our technicians are already on-site.</span></span>
+</label>
+</div>
+</div>
+</div>
+</section>
 </div>
 
 <!-- Mobile Overlay -->
@@ -115,25 +174,32 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 </div>
 
 <div id="quote-panel" class="bg-white lg:rounded-2xl shadow-xl lg:border border-slate-200 lg:sticky lg:top-8 flex flex-col h-full lg:max-h-[calc(100vh-4rem)] overflow-hidden">
-<div class="print-header mb-8 text-center border-b border-slate-200 pb-6 print:pb-4 print:mb-6 mt-4 lg:mt-0">
-<h2 class="text-3xl font-bold text-slate-800">Rocklin Solar Repair</h2>
-<p class="text-slate-600 text-sm mt-1">6518 Lonetree Blvd #2050, Rocklin, CA 95765<br>Phone: 916-741-0194 &bull; CSLB License #1050566</p>
-<h3 class="text-xl font-semibold text-sky-800 mt-4">Estimated Repair Quote</h3>
-<p class="text-slate-500 text-sm mt-1">Generated on: <span id="print-date"></span></p>
+<div class="print-header mb-6 border-b-2 border-sky-800 pb-5 mt-4 lg:mt-0">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-left">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 tracking-tight">Rocklin Solar Repair</h2>
+<p class="text-slate-600 text-xs mt-1 leading-relaxed">6518 Lonetree Blvd Suite 2050, Rocklin, CA 95765<br>Call or Text: 916-741-0194 &bull; Email: info@rocklinsolarrepair.com<br><span class="font-semibold text-slate-800">California Contractors License #1050566 (Class B &amp; C-46)</span></p>
 </div>
-<div class="p-6 border-b border-slate-100 bg-slate-50 lg:rounded-t-2xl print:rounded-none">
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-3 sm:text-right min-w-[210px]">
+<h3 class="text-base font-bold text-sky-800 uppercase tracking-wide">Estimated Repair Quote</h3>
+<p class="text-slate-600 text-xs mt-1">Date Issued: <span id="print-date" class="font-semibold text-slate-800"></span></p>
+<p class="text-slate-600 text-xs mt-0.5">Valid Until: <span id="print-valid-date" class="font-semibold text-red-700"></span> <span class="text-[10px] text-slate-400">(30 Days)</span></p>
+</div>
+</div>
+</div>
+<div class="p-6 border-b border-slate-100 bg-slate-50 lg:rounded-t-2xl print:rounded-none print:bg-slate-50/70 print:border print:border-slate-200 print:rounded-lg print:p-4 print:mb-4">
 <h2 class="text-xl font-semibold text-slate-800 flex items-center gap-2 print:hidden">
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>Your Estimate</h2>
 <div id="quote-project-details" class="mt-4 p-4 bg-white rounded-lg border border-slate-200 text-sm text-slate-600 hidden print:mt-0 print:border-none print:p-0 print:bg-transparent">
 <div class="grid grid-cols-1 gap-2">
-<p class="flex justify-between"><span class="font-medium text-slate-700">Customer:</span> <span id="display-customer" class="text-right"></span></p>
-<p class="flex justify-between"><span class="font-medium text-slate-700">Address:</span> <span id="display-address" class="text-right max-w-[200px]"></span></p>
+<p class="flex justify-between"><span class="font-medium text-slate-700">Customer:</span> <span id="display-customer" class="text-right font-medium text-slate-900"></span></p>
+<p class="flex justify-between"><span class="font-medium text-slate-700">Property Address:</span> <span id="display-address" class="text-right max-w-[220px] print:max-w-none font-medium text-slate-900"></span></p>
 <p class="flex justify-between"><span class="font-medium text-slate-700">Inspector:</span> <span id="display-inspector" class="text-right"></span></p>
-<div id="display-report-container" class="mt-2 pt-2 border-t border-slate-100 hidden flex justify-center print:hidden"><a id="display-report-link" href="#" target="_blank" class="text-sky-600 hover:text-sky-800 font-medium flex items-center justify-center gap-1.5 bg-sky-50 hover:bg-sky-100 py-1.5 px-3 rounded-md transition-colors w-full text-center border border-sky-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg> View Inspection Report & Photos</a></div>
+<div id="display-report-container" class="mt-2 pt-2 border-t border-slate-100 hidden flex justify-center"><a id="display-report-link" href="#" target="_blank" class="text-sky-700 hover:text-sky-900 font-medium flex items-center justify-center gap-1.5 bg-sky-50 hover:bg-sky-100 py-1.5 px-3 rounded-md transition-colors w-full text-center border border-sky-200 text-xs"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg> <span>Click to View Official Spectora Inspection Report &amp; Site Photos</span></a></div>
 </div>
 </div>
 </div>
-<div class="p-6 flex-1 overflow-y-auto custom-scrollbar bg-white">
+<div class="p-6 flex-1 overflow-y-auto custom-scrollbar bg-white print:px-2 print:py-4">
 <div id="empty-state" class="text-center py-8 text-slate-400 print:hidden">
 <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
 <p>No services selected yet.</p>
@@ -141,7 +207,7 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 </div>
 <ul id="quote-items" class="space-y-6 hidden"></ul>
 </div>
-<div class="p-6 bg-slate-50 lg:rounded-b-2xl border-t border-slate-200 print:bg-white print:border-t-2 print:border-slate-800 pb-10 lg:pb-6">
+<div class="p-6 bg-slate-50 lg:rounded-b-2xl border-t border-slate-200 print:bg-white print:border-t-2 print:border-slate-800 pb-10 lg:pb-6 print:px-2 print:pb-4">
 <div class="mb-4 pb-4 border-b border-slate-200 print:hidden">
 <label class="flex items-center space-x-2 text-sm font-medium text-slate-700 cursor-pointer">
 <input type="checkbox" id="hide-prices-toggle" class="w-5 h-5 rounded border-slate-300 text-sky-600 focus:ring-sky-500">
@@ -156,16 +222,90 @@ body{font-family:'Inter',sans-serif;background-color:#f8fafc}.custom-scrollbar::
 <div id="subtotal-row" class="flex justify-between items-center text-slate-600 mb-2"><span>Subtotal</span> <span id="subtotal" class="font-medium">$0.00</span></div>
 <div id="discount-row" class="flex justify-between items-center text-green-600 mb-2 hidden"><span id="discount-label">Discount</span> <span id="discount-display" class="font-medium">-$0.00</span></div>
 <div class="flex justify-between items-center pt-4 border-t border-slate-200 relative print:border-none print:pt-2">
-<div class="flex flex-col"><span class="text-lg font-bold text-slate-800">Total</span><button id="reset-total-btn" class="text-xs text-sky-600 hover:text-sky-800 text-left hidden print:hidden mt-1 font-medium transition-colors cursor-pointer" onclick="resetTotal()">Reset calculation</button></div>
+<div class="flex flex-col"><span class="text-lg font-bold text-slate-800">Total Estimate</span><button id="reset-total-btn" class="text-xs text-sky-600 hover:text-sky-800 text-left hidden print:hidden mt-1 font-medium transition-colors cursor-pointer" onclick="resetTotal()">Reset calculation</button></div>
 <div class="flex items-center">
 <div id="total-input-container" class="text-3xl font-bold text-sky-700 print:hidden flex items-center">$ <input type="number" id="total-price-input" class="w-32 bg-transparent border-b-2 border-transparent hover:border-slate-300 focus:border-sky-500 focus:outline-none text-right transition-colors p-0 m-0 ml-1 no-spinners" step="0.01" min="0"></div>
 <span id="total-price-print" class="text-3xl font-bold text-sky-700 hidden print:block">$0.00</span>
 </div>
 </div>
+
+<!-- PRINT-ONLY SECTIONS: ESCROW BADGE, 3-WAY APPROVAL BANNER, UPSELLS & SITE CONDITIONS -->
+<div id="print-extras-container" class="print-only-section mt-6 space-y-5 text-left">
+
+<!-- Escrow Friendly Callout -->
+<div id="pdf-escrow-block" class="bg-sky-50 border border-sky-200 rounded-lg p-3.5 text-xs text-slate-700 print-avoid-break">
+<p class="font-bold text-sky-900 flex items-center gap-1.5 text-sm">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+In Escrow? Real Estate Transaction Friendly Scheduling &amp; Billing
+</p>
+<p class="mt-1 leading-relaxed">We work directly with Realtors, Transaction Coordinators, and Title/Escrow Companies across Placer, Sacramento, and El Dorado counties. Approved repairs can be scheduled promptly to prevent closing delays, or coordinated directly with your escrow officer.</p>
+</div>
+
+<!-- Quote Approval: 3 Easy Ways to Approve (Reply / Text / Call — Spectora Link Next) -->
+<div id="pdf-approval-block" class="border-2 border-sky-800 rounded-xl p-4 bg-white print-avoid-break">
+<div class="border-b border-slate-200 pb-2.5 mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+Ready to Schedule? 3 Easy Ways to Approve This Quote
+</h4>
+<p class="text-xs text-slate-600 mt-0.5"><strong>No signature is required on this PDF.</strong> Once you notify us below, our office will set up your job in <strong>Spectora</strong> and send a single link to digitally sign, confirm scheduling, and select Direct Pay or Escrow Billing.</p>
+</div>
+</div>
+
+<div class="grid grid-cols-3 gap-3 text-xs">
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+<div class="font-bold text-sky-800 uppercase tracking-wider text-[11px] mb-1">1. Text Approval</div>
+<p class="text-slate-700 leading-snug">Text <strong class="text-slate-900">"APPROVE <span id="pdf-approve-addr" class="underline">this property</span>"</strong> to <strong class="text-slate-900 whitespace-nowrap">916-741-0194</strong> with your name, email, and whether billing is Direct or Escrow.</p>
+</div>
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+<div class="font-bold text-sky-800 uppercase tracking-wider text-[11px] mb-1">2. Reply by Email</div>
+<p class="text-slate-700 leading-snug">Simply reply <strong class="text-slate-900">"APPROVED"</strong> to your quote email or email <strong class="text-slate-900">info@rocklinsolarrepair.com</strong> and we will send your Spectora link.</p>
+</div>
+<div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+<div class="font-bold text-sky-800 uppercase tracking-wider text-[11px] mb-1">3. Call Our Office</div>
+<p class="text-slate-700 leading-snug">Call our operations team at <strong class="text-slate-900 whitespace-nowrap">916-741-0194</strong> and we will get your repair on the schedule right over the phone.</p>
+</div>
+</div>
+</div>
+
+<!-- Marketing & Bundle Upsells Container -->
+<div id="pdf-upsells-wrapper" class="hidden border border-amber-300 bg-amber-50/70 rounded-lg p-4 space-y-2.5 print-avoid-break">
+<h4 class="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+Recommended System Upgrades &amp; On-Site Bundle Savings
+</h4>
+<div id="pdf-upsell-battery-item" class="hidden text-xs text-slate-700 bg-white p-2.5 rounded border border-amber-200 print-avoid-break">
+<strong class="text-slate-900">&#9889; Upgrade Your Solar with Whole-Home Battery Backup:</strong> Did you know standard grid-tied solar systems automatically shut off during a utility power outage? Rocklin Solar Repair specializes in retrofitting existing solar systems with <strong>Anker SOLIX E10</strong>, <strong>Enphase IQ 10C</strong>, and <strong>Tesla Powerwall 3</strong> energy storage—engineered to provide backup power and maximize utility time-of-use savings without expensive main electrical panel upgrades. Ask us for a custom battery storage quote!
+</div>
+<div id="pdf-upsell-critter-item" class="hidden text-xs text-slate-700 bg-white p-2.5 rounded border border-amber-200 print-avoid-break">
+<strong class="text-slate-900">&#128737; Bundle Critter Guard Protection &amp; Save on Labor:</strong> Squirrels, pigeons, and rodents nesting under solar arrays are the #1 cause of repeat wire damage and system failure in Northern California. Since our technicians and ladders will already be deployed on your roof for this repair, ask about bundling heavy-duty perimeter <strong>Critter Guard Mesh</strong> at a discounted on-site rate.
+</div>
+<div id="pdf-upsell-cleaning-item" class="hidden text-xs text-slate-700 bg-white p-2.5 rounded border border-amber-200 print-avoid-break">
+<strong class="text-slate-900">&#10024; Bundle Deionized Solar Panel Cleaning:</strong> Dirt, pollen, and ash buildup can reduce solar energy production by up to 15%. Ask our office about adding a professional, chemical-free deionized water panel cleaning while our crew is already on your roof!
+</div>
+</div>
+
+<!-- Site Condition Variables & Scope Terms -->
+<div id="pdf-terms-wrapper" class="border-t border-slate-300 pt-3 text-[11px] text-slate-600 leading-snug space-y-1.5 print-avoid-break">
+<h4 class="font-bold text-xs text-slate-800 uppercase tracking-wider">Scope Assumptions &amp; Unforeseen Site Condition Terms</h4>
+<div id="pdf-term-standard" class="space-y-1">
+<p class="print-avoid-break"><strong>1. Hidden Under-Array &amp; Conduit Conditions:</strong> This estimate is based on visual and accessible diagnostic observations made at the time of inspection. Once solar modules are lifted or electrical enclosures/conduit are opened, any concealed damage—including rodent-chewed trunk/PV wires, melted connectors, corroded junction boxes, or hidden roof underlayment/broken tile damage—will be documented with photos and quoted via a supplemental change order prior to proceeding.</p>
+<p class="print-avoid-break"><strong>2. Cascading Electrical &amp; Commissioning Faults:</strong> Restoring power to a non-functional inverter or communication gateway frequently reveals secondary component failures (such as failed DC optimizers, microinverters, or ground/arc faults) that could not be polled while the primary system was offline. Additional faulty components discovered post-commissioning are not included in this base quote unless explicitly itemized above.</p>
+<p class="print-avoid-break"><strong>3. Network, Wi-Fi &amp; Account Access:</strong> System commissioning and monitoring setup require an active 2.4GHz Wi-Fi signal with sufficient strength at the inverter/gateway location, plus homeowner cooperation for login credentials. If Wi-Fi range extenders or Power Line Communication (PLC) adapters are needed due to poor signal strength, additional equipment charges will apply.</p>
+<p class="print-avoid-break"><strong>4. Quote Validity, Permitting &amp; Utility Fees:</strong> Pricing is valid for <strong>30 days</strong> from the date issued. Unless explicitly stated in the line items above, municipal building permit fees, HOA approvals, and utility interconnection or meter collar fees (PG&amp;E / SMUD) are billed separately.</p>
+</div>
+<p id="pdf-term-warranty" class="hidden print-avoid-break"><strong>&bull; Manufacturer RMA &amp; Warranty Contingency:</strong> Line items designated as <em>"(Warranty Price)"</em> cover Rocklin Solar Repair's diagnostic, removal, installation, and commissioning labor only. This pricing is strictly contingent upon the equipment manufacturer approving the RMA claim and supplying the replacement hardware. If a manufacturer denies warranty coverage, experiences insolvency, or requires homeowner warranty transfer fees, hardware supply costs will apply.</p>
+<p id="pdf-term-roof" class="hidden print-avoid-break"><strong>&bull; Roof Integrity, Brittle Tiles &amp; Safe Access:</strong> Client warrants that the roof structure is safe to walk on. While our technicians exercise extreme care, aged clay, slate, or lightweight concrete roof tiles can crack under normal foot traffic; Rocklin Solar Repair is not liable for pre-existing brittle tile breakage, and additional tile replacement or specialized steep-pitch/two-story safety staging fees may apply if unsafe conditions are encountered.</p>
+<p id="pdf-term-tpo" class="hidden print-avoid-break"><strong>&bull; Third-Party Owned (TPO / Lease / PPA) Systems:</strong> If the solar system is leased or owned by a third-party provider (e.g., Sunrun, Vivint, Tesla/SolarCity, Spruce, SunPower), the homeowner/client is responsible for obtaining any required lessor authorization prior to third-party repairs, panel removal, or equipment additions.</p>
+</div>
+
+</div>
+
 <div id="action-buttons" class="flex flex-col sm:flex-row gap-3 mt-6 print:hidden">
-<button id="share-btn" onclick="generateShareLink()" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
-<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-Copy Share Link
+<button id="share-btn" onclick="copyEmailSummary()" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+Copy Email Summary
 </button>
 <button id="print-btn" onclick="openPrintWindow()" class="flex-1 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
@@ -214,12 +354,22 @@ let selectedServices={};let isTotalOverridden=!1;let isReadOnly=!1;
 
 function resetTotal(){if(isReadOnly)return;isTotalOverridden=!1;document.getElementById('reset-total-btn').classList.add('hidden');updateQuoteUI();}
 
+function setQuoteDates(){
+const now=new Date();
+const validDate=new Date();
+validDate.setDate(now.getDate()+30);
+document.getElementById('print-date').textContent=now.toLocaleDateString();
+const validEl=document.getElementById('print-valid-date');
+if(validEl)validEl.textContent=validDate.toLocaleDateString();
+}
+
 function initializeApp(){
 const urlParams=new URLSearchParams(window.location.search);
 const legacyData=urlParams.get('quote');
 const v2Data=urlParams.get('d');
 
 renderCategoryPills();
+setQuoteDates();
 
 if(v2Data || legacyData){
 try{
@@ -252,16 +402,15 @@ quoteData=JSON.parse(decodeURIComponent(atob(legacyData)));
 isReadOnly=!0;
 document.getElementById('customer-name').value=quoteData.c||'';document.getElementById('customer-address').value=quoteData.a||'';document.getElementById('inspector-name').value=quoteData.i||'';document.getElementById('report-link').value=quoteData.r||'';document.getElementById('discount-input').value=quoteData.d||'';document.getElementById('discount-desc').value=quoteData.dd||'';document.getElementById('hide-prices-toggle').checked=quoteData.h||!1;selectedServices=quoteData.s||{};isTotalOverridden=quoteData.o||!1;
 if(isTotalOverridden){document.getElementById('total-price-input').value=quoteData.t;document.getElementById('total-price-print').textContent=`$${parseFloat(quoteData.t).toFixed(2)}`;}
-document.getElementById('print-date').textContent=new Date().toLocaleDateString();setupProjectDetails();enterReadOnlyMode();updateQuoteUI();return;
+setQuoteDates();setupProjectDetails();enterReadOnlyMode();updateQuoteUI();return;
 }catch(e){console.error("Invalid quote link",e);isReadOnly=!1;}
 }
 
 const container=document.getElementById('services-container');
-document.getElementById('print-date').textContent=new Date().toLocaleDateString();
 document.getElementById('hide-prices-toggle').addEventListener('change',updateQuoteUI);
 document.getElementById('discount-input').addEventListener('input',updateQuoteUI);
 document.getElementById('discount-desc').addEventListener('input',updateQuoteUI);
-document.getElementById('total-price-input').addEventListener('input',(e)=>{isTotalOverridden=!0;document.getElementById('reset-total-btn').classList.remove('hidden');let val=parseFloat(e.target.value);if(isNaN(val))val=0;document.getElementById('total-price-print').textContent=`$${val.toFixed(2)}`;});
+document.getElementById('total-price-input').addEventListener('input',(e)=>{isTotalOverridden=!0;document.getElementById('reset-total-btn').classList.remove('hidden');let val=parseFloat(e.target.value);if(isNaN(val))val=0;document.getElementById('total-price-print').textContent=`$${val.toFixed(2)}`;updatePdfExtras();});
 
 repairData.forEach((categoryObj, index)=>{
 const section=document.createElement('section');
@@ -293,7 +442,64 @@ checkbox.addEventListener('change',(e)=>{if(e.target.checked){if(item.isVariable
 if(item.isVariable){qtyInput.addEventListener('input',(e)=>{let val=parseInt(e.target.value);if(isNaN(val)||val<1)val=1;if(checkbox.checked){addToQuote(item,val,categoryObj.category);}});}
 },0);});
 section.appendChild(itemsList);container.appendChild(section);});
-setupProjectDetails();setupCustomItems();updateQuoteUI();}
+setupProjectDetails();setupCustomItems();setupPdfOptionsAccordion();updateQuoteUI();}
+
+function setupPdfOptionsAccordion(){
+const pdfHeader=document.getElementById('pdf-options-header');
+const pdfContent=document.getElementById('pdf-options-content');
+const pdfChevron=document.getElementById('pdf-options-chevron');
+if(pdfHeader){
+pdfHeader.addEventListener('click',()=>{
+if(pdfContent.classList.contains('hidden')){
+pdfContent.classList.remove('hidden');
+pdfChevron.classList.add('rotate-180');
+}else{
+pdfContent.classList.add('hidden');
+pdfChevron.classList.remove('rotate-180');
+}
+});
+}
+}
+
+function updatePdfExtras(){
+const stdTerms=document.getElementById('opt-standard-terms')?.checked;
+const warTerms=document.getElementById('opt-warranty-terms')?.checked;
+const roofWarn=document.getElementById('opt-roof-warning')?.checked;
+const tpoNotice=document.getElementById('opt-tpo-notice')?.checked;
+const escrowBadge=document.getElementById('opt-escrow-badge')?.checked;
+const upsellBat=document.getElementById('opt-upsell-battery')?.checked;
+const upsellCrit=document.getElementById('opt-upsell-critter')?.checked;
+const upsellClean=document.getElementById('opt-upsell-cleaning')?.checked;
+
+const escrowBlock=document.getElementById('pdf-escrow-block');
+if(escrowBlock) escrowBlock.classList.toggle('hidden', !escrowBadge);
+
+const upsellsWrapper=document.getElementById('pdf-upsells-wrapper');
+const batItem=document.getElementById('pdf-upsell-battery-item');
+const critItem=document.getElementById('pdf-upsell-critter-item');
+const cleanItem=document.getElementById('pdf-upsell-cleaning-item');
+
+if(batItem) batItem.classList.toggle('hidden', !upsellBat);
+if(critItem) critItem.classList.toggle('hidden', !upsellCrit);
+if(cleanItem) cleanItem.classList.toggle('hidden', !upsellClean);
+if(upsellsWrapper) upsellsWrapper.classList.toggle('hidden', !(upsellBat || upsellCrit || upsellClean));
+
+const termsWrapper=document.getElementById('pdf-terms-wrapper');
+const termStdEl=document.getElementById('pdf-term-standard');
+const termWarEl=document.getElementById('pdf-term-warranty');
+const termRoofEl=document.getElementById('pdf-term-roof');
+const termTpoEl=document.getElementById('pdf-term-tpo');
+
+if(termStdEl) termStdEl.classList.toggle('hidden', !stdTerms);
+if(termWarEl) termWarEl.classList.toggle('hidden', !warTerms);
+if(termRoofEl) termRoofEl.classList.toggle('hidden', !roofWarn);
+if(termTpoEl) termTpoEl.classList.toggle('hidden', !tpoNotice);
+if(termsWrapper) termsWrapper.classList.toggle('hidden', !(stdTerms || warTerms || roofWarn || tpoNotice));
+
+const address=document.getElementById('customer-address').value.trim();
+const approveAddrEl=document.getElementById('pdf-approve-addr');
+if(approveAddrEl) approveAddrEl.textContent=address || 'this property';
+}
 
 function filterServices() {
   const query = document.getElementById('service-search').value.toLowerCase();
@@ -381,7 +587,8 @@ function toggleMobileQuote() {
 function setupProjectDetails(){
 const updateDisplay=()=>{
 const name=document.getElementById('customer-name').value.trim();const address=document.getElementById('customer-address').value.trim();const inspector=document.getElementById('inspector-name').value.trim();const reportLink=document.getElementById('report-link').value.trim();const displayDiv=document.getElementById('quote-project-details');
-if(name||address||inspector||reportLink){displayDiv.classList.remove('hidden');document.getElementById('display-customer').textContent=name||'-';document.getElementById('display-address').textContent=address||'-';document.getElementById('display-inspector').textContent=inspector||'-';const linkContainer=document.getElementById('display-report-container');const linkEl=document.getElementById('display-report-link');if(reportLink){linkContainer.classList.remove('hidden');linkEl.href=reportLink;}else{linkContainer.classList.add('hidden');linkEl.href='#';}}else{displayDiv.classList.add('hidden');}};
+if(name||address||inspector||reportLink){displayDiv.classList.remove('hidden');document.getElementById('display-customer').textContent=name||'-';document.getElementById('display-address').textContent=address||'-';document.getElementById('display-inspector').textContent=inspector||'-';const linkContainer=document.getElementById('display-report-container');const linkEl=document.getElementById('display-report-link');if(reportLink){linkContainer.classList.remove('hidden');linkEl.href=reportLink;}else{linkContainer.classList.add('hidden');linkEl.href='#';}}else{displayDiv.classList.add('hidden');}
+updatePdfExtras();};
 ['customer-name','customer-address','inspector-name','report-link'].forEach(id=>{document.getElementById(id).addEventListener('input',updateDisplay);});
 updateDisplay();}
 
@@ -400,7 +607,18 @@ itemDiv.querySelector(`#cb_${customId}`).addEventListener('change',(e)=>{if(e.ta
 nameInput.value='';descInput.value='';priceInput.value='';nameInput.focus();});}
 
 function removeCustomItem(id,btnElement){removeFromQuote(id);btnElement.closest('.p-4').remove();}
-function addToQuote(item,quantity,categoryName=null){selectedServices[item.id]={name:item.name,description:item.description,category:categoryName,price:item.price,quantity:quantity,isVariable:item.isVariable,unit:item.unit};updateQuoteUI();}
+function addToQuote(item,quantity,categoryName=null){
+selectedServices[item.id]={name:item.name,description:item.description,category:categoryName,price:item.price,quantity:quantity,isVariable:item.isVariable,unit:item.unit};
+if(item.name && item.name.toLowerCase().includes('warranty')){
+const warCheckbox=document.getElementById('opt-warranty-terms');
+if(warCheckbox) warCheckbox.checked=true;
+}
+if((item.name && item.name.toLowerCase().includes('two story')) || (item.name && item.name.toLowerCase().includes('2nd story'))){
+const roofCheckbox=document.getElementById('opt-roof-warning');
+if(roofCheckbox) roofCheckbox.checked=true;
+}
+updateQuoteUI();
+}
 function removeFromQuote(itemId){delete selectedServices[itemId];updateQuoteUI();}
 function updateItemTitle(id,newTitle){if(isReadOnly||!selectedServices[id])return;const defaultTitle=selectedServices[id].category?selectedServices[id].category:selectedServices[id].name;const safeTitle=newTitle.trim().replace(/</g,"&lt;").replace(/>/g,"&gt;");selectedServices[id].editedTitle=safeTitle!==''?safeTitle:defaultTitle;}
 function updateItemDescription(id,newDesc){if(isReadOnly||!selectedServices[id])return;const safeDesc=newDesc.trim().replace(/</g,"&lt;").replace(/>/g,"&gt;");selectedServices[id].editedDescription=safeDesc!==''?safeDesc:selectedServices[id].description;}
@@ -437,6 +655,83 @@ if(!isTotalOverridden){
 // Update Mobile Sticky Footer
 document.getElementById('mobile-total-display').textContent=`$${isTotalOverridden ? parseFloat(document.getElementById('total-price-input').value).toFixed(2) : total.toFixed(2)}`;
 document.getElementById('mobile-item-count').textContent=totalItemsCount;
+updatePdfExtras();
+}
+
+function copyEmailSummary(){
+const customer=document.getElementById('customer-name').value.trim()||'Valued Client';
+const address=document.getElementById('customer-address').value.trim()||'Property Address';
+const inspector=document.getElementById('inspector-name').value.trim()||'Rocklin Solar Repair';
+const reportLink=document.getElementById('report-link').value.trim();
+const hidePrices=document.getElementById('hide-prices-toggle').checked;
+const totalStr=document.getElementById('total-price-print').textContent||'$0.00';
+const validDate=document.getElementById('print-valid-date')?.textContent||'30 Days';
+
+let lines=[];
+lines.push(`ROCKLIN SOLAR REPAIR - ESTIMATED REPAIR QUOTE`);
+lines.push(`==================================================`);
+lines.push(`Customer: ${customer}`);
+lines.push(`Property Address: ${address}`);
+lines.push(`Inspector: ${inspector}`);
+if(reportLink) lines.push(`Inspection Report & Photos: ${reportLink}`);
+lines.push(`Quote Valid Until: ${validDate}`);
+lines.push(`--------------------------------------------------`);
+lines.push(`SCOPE OF WORK:`);
+
+const serviceIds=Object.keys(selectedServices);
+serviceIds.forEach((id, idx)=>{
+const s=selectedServices[id];
+const itemTotal=s.editedPrice!==undefined?s.editedPrice:s.price*s.quantity;
+const defaultTitle=s.category?s.category:s.name;
+const displayTitle=s.editedTitle!==undefined?s.editedTitle:defaultTitle;
+const displayDesc=s.editedDescription!==undefined?s.editedDescription:s.description;
+const qtyText=s.isVariable?` (${s.quantity} ${s.unit})` : '';
+const priceText=hidePrices ? '' : ` - $${itemTotal.toFixed(2)}`;
+lines.push(`${idx+1}. ${displayTitle}${qtyText}${priceText}`);
+lines.push(`   ${displayDesc}`);
+});
+
+lines.push(`--------------------------------------------------`);
+const discountVal=parseFloat(document.getElementById('discount-input').value)||0;
+if(!hidePrices && discountVal>0){
+const discLabel=document.getElementById('discount-desc').value.trim()||'Discount';
+lines.push(`Subtotal: ${document.getElementById('subtotal').textContent}`);
+lines.push(`${discLabel}: -$${discountVal.toFixed(2)}`);
+}
+lines.push(`TOTAL ESTIMATE: ${totalStr}`);
+lines.push(`==================================================`);
+lines.push(`HOW TO APPROVE & SCHEDULE (NO PDF SIGNATURE NEEDED):`);
+lines.push(`Once you let us know this quote is approved, our office will set up your job in Spectora and send a single link for digital signature, scheduling, and payment/escrow selection.`);
+lines.push(`  1. TEXT US: Text "APPROVE ${address}" to 916-741-0194`);
+lines.push(`  2. EMAIL US: Reply "APPROVED" to this email (or email info@rocklinsolarrepair.com)`);
+lines.push(`  3. CALL US: Call our operations desk at 916-741-0194`);
+lines.push(`\nRocklin Solar Repair | CSLB #1050566`);
+lines.push(`6518 Lonetree Blvd Suite 2050, Rocklin, CA 95765`);
+lines.push(`Call/Text: 916-741-0194 | info@rocklinsolarrepair.com`);
+
+const summaryText=lines.join('\n');
+const textArea=document.createElement("textarea");
+textArea.value=summaryText;
+textArea.style.position="fixed";
+document.body.appendChild(textArea);
+textArea.focus();
+textArea.select();
+try{
+document.execCommand('copy');
+const btn=document.getElementById('share-btn');
+const originalHtml=btn.innerHTML;
+btn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Summary Copied!`;
+btn.classList.replace('bg-sky-600','bg-green-600');
+btn.classList.replace('hover:bg-sky-700','hover:bg-green-700');
+setTimeout(()=>{
+btn.innerHTML=originalHtml;
+btn.classList.replace('bg-green-600','bg-sky-600');
+btn.classList.replace('hover:bg-green-700','hover:bg-sky-700');
+},2500);
+}catch(err){
+console.error('Failed to copy',err);
+}
+document.body.removeChild(textArea);
 }
 
 function generateShareLink(){
@@ -475,8 +770,11 @@ const drawerHandle = document.querySelector('.cursor-pointer.bg-white.rounded-t-
 if(drawerHandle) drawerHandle.style.display='none';}
 
 function openPrintWindow(){
+updatePdfExtras();
+const rawAddr=document.getElementById('customer-address').value.trim();
+const safeTitle=rawAddr ? `Solar Repair Quote - Rocklin Solar Repair - ${rawAddr.replace(/[<>:"/\\|?*]+/g, '')}` : `Solar Repair Quote - Rocklin Solar Repair`;
 const quoteHtml=document.getElementById('quote-panel').innerHTML;const newWin=window.open('','_blank');
-newWin.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Solar Repair Quote</title><script src="https://cdn.tailwindcss.com"><\/script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif;background-color:white;color:#1e293b;padding:2rem;}#action-buttons,.print\\:hidden,label,input[type="checkbox"]{display:none !important;}.print-header{display:block !important;margin-bottom:2rem;text-align:center;}#total-price-print{display:block !important;}[contenteditable]{-webkit-user-modify:read-only;}.overflow-y-auto,.custom-scrollbar,#quote-panel{overflow:visible !important;max-height:none !important;box-shadow:none !important;border:none !important;}</style></head><body><div class="max-w-2xl mx-auto">${quoteHtml}</div><script>setTimeout(()=>{window.print();},800);<\/script></body></html>`);
+newWin.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${safeTitle}</title><script src="https://cdn.tailwindcss.com"><\/script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif;background-color:white;color:#1e293b;padding:1.5rem;}#action-buttons,.print\\:hidden,label,input[type="checkbox"]{display:none !important;}.print-header{display:block !important;margin-bottom:1.5rem;}.print-only-section{display:block !important;}#total-price-print{display:block !important;}[contenteditable]{-webkit-user-modify:read-only;}.overflow-y-auto,.custom-scrollbar,#quote-panel{overflow:visible !important;max-height:none !important;box-shadow:none !important;border:none !important;}.print-avoid-break,li{break-inside:avoid;page-break-inside:avoid;}@media print{body{padding:0.5rem;}.print-avoid-break,li,#pdf-approval-block,#pdf-upsells-wrapper,#pdf-terms-wrapper,#pdf-escrow-block{break-inside:avoid !important;page-break-inside:avoid !important;}}</style></head><body><div class="max-w-3xl mx-auto">${quoteHtml}</div><script>setTimeout(()=>{window.print();},800);<\/script></body></html>`);
 newWin.document.close();}
 window.addEventListener('DOMContentLoaded',initializeApp);
 </script>
